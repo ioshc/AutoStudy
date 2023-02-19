@@ -27,7 +27,6 @@
 	{
 		// 2种指定方式，如果指定JS，那么会自动生成一个背景页
 		"scripts": ["js/background.js"]
-		//"scripts": ["js/background.js"]
 	},
 	//需要直接注入页面的JS
 	"content_scripts": 
@@ -35,23 +34,32 @@
 		{
 			//"matches": ["http://*/*", "https://*/*"],
 			// "<all_urls>" 表示匹配所有地址
-			"matches": ["http://www.cdjxjy.com/IndexMain.aspx"],
+			"matches": ["https://www.cdjxjy.com/IndexMain.aspx"],
 			// 多个JS按顺序注入
 			"js": ["js/content-script.js"],
+			// 代码注入的时间，可选值： "document_start", "document_end", or "document_idle"，最后一个表示页面空闲时，默认document_idle
+			"run_at": "document_start"
+		},
+		{
+			//"matches": ["http://*/*", "https://*/*"],
+			// "<all_urls>" 表示匹配所有地址
+			"matches": ["https://www.cdjxjy.com/Student/CoursePlay.aspx?*"],
+			// 多个JS按顺序注入
+			"js": ["js/content-script2.js"],
 			// 代码注入的时间，可选值： "document_start", "document_end", or "document_idle"，最后一个表示页面空闲时，默认document_idle
 			"run_at": "document_start"
 		}
 	],
 
 	// 普通页面能够直接访问的插件资源列表，如果不设置是无法直接访问的
-	"web_accessible_resources": ["js/autoStudy.js","js/jquery-1.9.0.js","js/autoStudyOnceInvoker.js"],
+	"web_accessible_resources": ["js/courseList.js","js/autoStudy.js","js/jquery-1.9.0.js","js/autoStudyOnceInvoker.js"],
 
 	// 插件主页，这个很重要，不要浪费了这个免费广告位
-	"homepage_url": "http://www.cdjxjy.com/IndexMain.aspx",
+	"homepage_url": "https://www.cdjxjy.com/IndexMain.aspx#/student/SelectCourseRecord.aspx",
 	//申请的权限
 	"permissions":[
 		"tabs",
 		"declarativeContent",
-		"http://www.cdjxjy.com/IndexMain.aspx"
+		"https://www.cdjxjy.com/IndexMain.aspx"
 	]
 }
