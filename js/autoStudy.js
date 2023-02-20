@@ -1,16 +1,5 @@
-// var eventHandler = function (event) {     
-//     console.log(event.type);   
-//     console.log(event.timeStamp);    
-//     console.log(document.readyState);    
-//     console.log('\n');
-// }
-// console.log(document.readyState);
-// document.addEventListener('readystatechange', eventHandler,false);
-// document.addEventListener('DOMContentLoaded', eventHandler, false);
-// window.addEventListener('load', eventHandler, false);
-
 replaceConfirmFunctionWindow();
-startCheckIsCompleted();
+startCheckIfCompleted();
 
 function replaceConfirmFunctionWindow() {
 	window.confirm = function(msg) {
@@ -30,19 +19,24 @@ function replaceConfirmFunctionWindow() {
     console.log('替换验证码弹窗事件');
 }
 
-function startCheckIsCompleted() {
+// 在新窗口中学习课程时才需要检测是否完成
+function startCheckIfCompleted() {
 	var remainingMin = parseInt($('#labstudenttime').text().slice(-10).replace(/[^0-9]/ig,""));
-	console.log("剩余时间：", remainingMin, "分钟");
+	console.log("剩余时间：", remainingMin, "分钟", " ------ ", Date());
 
 	// 课程未完成则递归检查
 	if (!isNaN(remainingMin)) {
 		window.setTimeout( function() {
-	 		startCheckIsCompleted();
+	 		startCheckIfCompleted();
 		}, 1000 * 60);
 		return
 	}
 
-	// 填写学习记录并关闭当前学习页面
+	fillStudyRecord();
+}
+
+// 填写学习记录，在新页面中学习
+function fillStudyRecord() {
 	var keyPoint = "授课内容新颖，独到，有自己的特色，能很好的启发、带动学生的思维。立意新，大大地启发了学生的创造性思维"
 	var comments = "贴近学生实际情况，引入生活化，注意历史核心素养的培养。深入浅出。贴近学生实际情况，引入生活化。"
 
@@ -56,8 +50,8 @@ function startCheckIsCompleted() {
     // 提交
 	logPannel.find('#AddRecord').click();
 
-	console.log('填写评论成功，30s后关闭当前窗口');
+	console.log('填写评论成功，10s后关闭当前窗口');
 	window.setTimeout( function() {
 	 	window.close();
-	}, 1000 * 30);
+	}, 1000 * 10);
 }
